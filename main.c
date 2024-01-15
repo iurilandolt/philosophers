@@ -42,10 +42,10 @@ typedef struct s_simu
 {
 	int		seats;
 	int		meal_goal; // [5] or -1 (amount or flag)
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	sim_start;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		sim_start;
 	bool	sim_end; // sim ends when a philo dies or all philos are full
 	t_philo	*philosophers;
 	t_fork	*forks;
@@ -67,14 +67,6 @@ int	ft_atoi(char *str)
 	while (*str >= '0' && *str <= '9')
 		n = n * 10 + (*str++ - '0');
 	return (n * sign);
-}
-
-long ft_atol(char *str)
-{
-	long	result;
-
-	result = 0;
-
 }
 
 /*
@@ -104,16 +96,20 @@ int main(int argc, char **argv)
 {
 //	t_philo	*philos;
 //	t_fork	*forks;
-//	t_simu	*simu;
-(void)argc;
-(void)argv;
+	t_simu	simu;
 
-	if (argc == 2)
+	if (argc == 6)
 	{
-		// parse
-		// init philos, forks, simu
-		// start simu
-		printf("%ld", ft_atol("1,567"));
+		simu.seats = ft_atoi(argv[1]);
+		simu.time_to_die = ft_atoi(argv[2]);
+		simu.time_to_eat = ft_atoi(argv[3]);
+		simu.time_to_sleep = ft_atoi(argv[4]);
+		simu.meal_goal = ft_atoi(argv[5]);
+		printf("%d\n", simu.seats);
+		printf("%d\n", simu.time_to_die);
+		printf("%d\n", simu.time_to_eat);
+		printf("%d\n", simu.time_to_sleep);
+		printf("%d\n", simu.meal_goal);
 	}
 	return (0);
 }
