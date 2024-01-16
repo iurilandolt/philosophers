@@ -6,12 +6,17 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:15:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/16 13:19:58 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:11:57 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+void	*test_routine()
+{
+	printf("test ok\n");
+	return NULL;
+}
 
 t_philo	*alloc_philos(t_simu *simu)
 {
@@ -24,7 +29,11 @@ t_philo	*alloc_philos(t_simu *simu)
 	i = 0;
 	while (i < simu->seats)
 	{
+
 		(new + i)->index = i + 1;
+		//pthread_create(&(new + i)->th_id, NULL, test_routine(i), NULL);
+		//pthread_detach((new + i)->th_id);
+		handle_thread_op((new + i)->th_id, test_routine, NULL, TH_CREATE);
 		(new + i)->meals = 0;
 		(new + i)->full = false;
 		(new + i)->last_meal = 0;
