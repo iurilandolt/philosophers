@@ -6,15 +6,18 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:15:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/16 14:11:57 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:37:23 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+int test = 0;
+
 void	*test_routine()
 {
-	printf("test ok\n");
+	printf("test %d ok\n", test);
+	test++;
 	return NULL;
 }
 
@@ -31,9 +34,15 @@ t_philo	*alloc_philos(t_simu *simu)
 	{
 
 		(new + i)->index = i + 1;
-		//pthread_create(&(new + i)->th_id, NULL, test_routine(i), NULL);
+		printf("alloc iter: %d\n", i);
+		//pthread_create(&(new + i)->th_id, NULL, test_routine, NULL);
 		//pthread_detach((new + i)->th_id);
 		handle_thread_op((new + i)->th_id, test_routine, NULL, TH_CREATE);
+		usleep(5);
+		handle_thread_op((new + i)->th_id, test_routine, NULL, TH_DETACH);
+
+
+
 		(new + i)->meals = 0;
 		(new + i)->full = false;
 		(new + i)->last_meal = 0;
@@ -75,14 +84,14 @@ void	print_sim_values(t_simu *simu)
 	int	i;
 
 	i = 0;
-	printf("seats: %d\n", simu->seats);
-	printf("meal_goal: %d\n", simu->meal_goal);
-	printf("time_to_die: %d\n", simu->time_to_die);
-	printf("time_to_eat: %d\n", simu->time_to_eat);
-	printf("time_to_sleep: %d\n", simu->time_to_sleep);
+	printf("-> seats: %d\n", simu->seats);
+	printf("-> time_to_die: %d\n", simu->time_to_die);
+	printf("-> time_to_eat: %d\n", simu->time_to_eat);
+	printf("-> time_to_sleep: %d\n", simu->time_to_sleep);
+	printf("-> meal_goal: %d\n", simu->meal_goal);
 	while (i < simu->seats)
 	{
-		print_philo_values(simu->philosophers + i);
+		print_philo_values((simu->philosophers + i));
 		i++;
 	}
 }

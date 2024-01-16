@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/16 13:17:14 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:16:35 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 		simu.philosophers = alloc_philos(&simu);
 		simu.forks = alloc_forks(&simu);
 
-		print_sim_values(&simu);
+		//print_sim_values(&simu);
 
 		simu.sim_end = false;
 		gettimeofday(&simu.start, NULL);
