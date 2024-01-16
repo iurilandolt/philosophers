@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/15 22:46:21 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/16 13:17:11 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_philo
 {
 	pthread_t	th_id;
 	int			index; // must start at 1, (i + 1) // 0 is flag for is dead?
-	long		meals;
+	int			meals;
 	long		last_meal;
 	bool		full;
 	t_fork		*left;
@@ -80,6 +80,11 @@ int	init_sim_values(t_simu *simu, int argc, char **argv);
 
 void	handle_mutex_op(pthread_mutex_t *mtx, t_mtxcode op);
 void	handle_thread_op(pthread_t	thread, void *(*func)(void *), void *data, t_thcode op); // function name and arguments must be shorter xD
+
 void	ft_error(char *str);
+void	print_sim_values(t_simu *simu);
+
+t_philo	*alloc_philos(t_simu *simu);
+t_fork	*alloc_forks(t_simu *simu);
 
 #endif

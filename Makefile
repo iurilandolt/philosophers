@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/15 18:21:04 by rlandolt          #+#    #+#              #
-#    Updated: 2024/01/15 22:47:35 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/01/16 13:17:32 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC_PATH = ./srcs
 SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/parse.c \
 	$(SRC_PATH)/operations.c \
+	$(SRC_PATH)/structs.c \
 
 SANITIZER = -fsanitize=thread
 
@@ -26,9 +27,9 @@ CFLAGS = -Wall -Wextra -Werror
 OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
-		ar -rcs $@ $(OBJ)
-		${CC} ${CFLAGS} -o philosophers ${NAME}
-		rm -f $(NAME)
+		@ar -rcs $@ $(OBJ)
+		@${CC} ${CFLAGS} -o philosophers ${NAME}
+		@rm -f $(NAME)
 
 all: $(NAME)
 

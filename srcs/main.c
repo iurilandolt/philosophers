@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/15 22:42:33 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/16 13:17:14 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ message announcing a philosopher died should be displayed no more than 10 ms
 after the actual death of the philosopher.
 
 */
-void	ft_error(char *str)
+void	ft_error(char *str) // pass t_simu, free allocated memory if any existss
 {
 	printf("%s%s%s\n", R, str, RST);
 	exit(EXIT_FAILURE);
@@ -53,20 +53,24 @@ void	ft_error(char *str)
 
 int main(int argc, char **argv)
 {
-	t_philo	*philos;
-	t_fork	*forks;
 	t_simu	simu;
 
+	simu.philosophers = NULL;
 	if (argc > 4 && argc < 7)
 	{
 		if (!init_sim_values(&simu, argc, argv))
 			ft_error("invalid argument");
-		philos = (t_philo *)malloc(sizeof(t_philo) * simu.seats);
-		forks = (t_fork *)malloc(sizeof(t_fork) * simu.seats);
+
+		simu.philosophers = alloc_philos(&simu);
+		simu.forks = alloc_forks(&simu);
+
+		print_sim_values(&simu);
+
 		simu.sim_end = false;
 		gettimeofday(&simu.start, NULL);
-		free(philos);
-		free(forks);
+
+		free(simu.philosophers);
+		free(simu.forks);
 	}
 	return (0);
 }
