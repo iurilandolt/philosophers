@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 19:32:45 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 22:32:41 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,15 @@ typedef struct s_simu
 	long	sim_srt;
 	bool	sim_end; // sim ends when a philo dies or all philos are full
 	bool	sim_rdy;
-	pthread_mutex_t	mtx;
+
 }	t_simu;
+
+typedef struct s_monitor
+{
+	t_simu	*simu;
+	t_philo	*philo;
+	pthread_mutex_t	mtx;
+}	t_monitor;
 
 int	init_sim_values(t_simu *simu, int argc, char **argv);
 

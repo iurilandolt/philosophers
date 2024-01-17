@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 20:02:01 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 22:48:58 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,32 +66,52 @@ bool get_bool(pthread_mutex_t *mtx, bool *value)
 	return (ret);
 }
 
-
+void	wait_for_threads(t_simu *simu)
+{
+	while (!simu->sim_rdy)
+		;
+}
+/*
 void	*sim_routine(void *data) // mby pass t_simu :(
 {
 	t_philo	*philo;
+	//t_simu	*simu;
 
 	philo = (t_philo *)data;
-	//wait all threads!
+	//simu = (t_simu *)data;
+	//wait_for_threads(philo->simu);
 	printf("thread initialized by philo %d\n", philo->index);
 	return NULL;
 }
+*/
+void	*sim_routine(void *data) // mby pass t_simu :(
+{
+	t_monitor	*mon;
 
-void	init_threads(t_simu *simu)
+	mon = (t_monitor *)data;
+	wait_for_threads(mon->simu);
+	return NULL;
+}
+
+void	init_threads(t_simu *simu, t_monitor *mon)
 {
 	int	i;
 
 	i = 0;
-	handle_mutex_op(&simu->mtx, MTX_INIT);
+	mon->simu = simu;
+	handle_mutex_op(&mon->mtx, MTX_INIT);
 	while (i < simu->seats)
 	{
-		handle_thread_op((simu->philosophers + i)->th_id, sim_routine,
-			(simu->philosophers + i), TH_CREATE); // leak is here d^.^b / need thread join or detach
+		mon->philo = simu->philosophers + i;
+		handle_thread_op(mon->philo->th_id, sim_routine,
+			mon, TH_CREATE); // leak is here d^.^b / need thread join or detach
 		i++;
 	}
-	handle_mutex_op(&simu->mtx, MTX_LOCK);
+	handle_mutex_op(&mon->mtx, MTX_LOCK);
 	simu->sim_rdy = true;
-	handle_mutex_op(&simu->mtx, MTX_UNLOCK);
+	simu->sim_srt = get_time_s();
+	printf("-> sim ready: %s @ %ld\n", simu->sim_rdy ? "true" : "false", simu->sim_srt);
+	handle_mutex_op(&mon->mtx, MTX_UNLOCK);
 	//set_bool(&simu->mtx, &simu->sim_rdy, true);
 }
 // main function has its own thread
@@ -100,7 +120,7 @@ void	init_threads(t_simu *simu)
 // if only 1 philo?
 //syncronize and join?
 
-void *start_sim(t_simu *simu)
+void *start_sim(t_simu *simu, t_monitor *mon)
 {
 	simu->sim_rdy = false;
 	simu->sim_end = false;
@@ -111,13 +131,13 @@ void *start_sim(t_simu *simu)
 	else if (!simu->seats)
 		return (NULL); // how handle 1 philo?
 	else
-		init_threads(simu); // leak is here d^.^b
-	simu->sim_srt = get_time_s();
+		init_threads(simu, mon); // leak is here d^.^b
 	return (NULL);
 }
 int main(int argc, char **argv)
 {
-	t_simu	simu;
+	t_simu		simu;
+	t_monitor	mon;
 
 	if (argc > 4 && argc < 7)
 	{
@@ -131,7 +151,7 @@ int main(int argc, char **argv)
 		simu.sim_srt = get_time_s();
 		*/
 
-		start_sim(&simu); // leaking
+		start_sim(&simu, &mon); // leaking
 
 		print_sim_values(&simu);
 

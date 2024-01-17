@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:12:55 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 15:23:07 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 22:18:20 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,7 @@ long	get_time_mcs(void)
 		ft_error("gettimeofday failed.");
 	return (tv.tv_sec * 1e6 + tv.tv_sec * 1e6);
 }
+
+// spinlock ?
+
+
