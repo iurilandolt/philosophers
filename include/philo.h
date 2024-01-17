@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 14:59:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:26:30 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,9 @@ void	print_sim_values(t_simu *simu);
 
 t_philo	*alloc_philos(t_simu *simu);
 t_fork	*alloc_forks(t_simu *simu);
+
+long	get_time_s(void);
+long	get_time_mls(void);
+long	get_time_mcs(void);
 
 #endif

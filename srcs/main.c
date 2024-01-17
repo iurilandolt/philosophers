@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 15:07:20 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:27:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int main(int argc, char **argv)
 		simu.philosophers = alloc_philos(&simu);
 		simu.forks = alloc_forks(&simu); // also assigns forks, sequentially atm.
 		simu.sim_end = false;
+		simu.sim_start = get_time_s();
 		init_threads(&simu);
 		print_sim_values(&simu);
 
