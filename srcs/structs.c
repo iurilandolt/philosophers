@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:15:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/16 16:37:23 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 10:49:28 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int test = 0;
 
-void	*test_routine()
+void	*test_routine(void *data)
 {
-	printf("test %d ok\n", test);
-	test++;
+	int	*i;
+
+	i = (int *)data;
+	printf("test %d ok\n", *(int *)data);
 	return NULL;
 }
 
@@ -37,9 +39,9 @@ t_philo	*alloc_philos(t_simu *simu)
 		printf("alloc iter: %d\n", i);
 		//pthread_create(&(new + i)->th_id, NULL, test_routine, NULL);
 		//pthread_detach((new + i)->th_id);
-		handle_thread_op((new + i)->th_id, test_routine, NULL, TH_CREATE);
+		handle_thread_op((new + i)->th_id, test_routine, &i, TH_CREATE);
 		usleep(5);
-		handle_thread_op((new + i)->th_id, test_routine, NULL, TH_DETACH);
+		handle_thread_op((new + i)->th_id, test_routine, &i, TH_DETACH);
 
 
 
