@@ -6,11 +6,23 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:29:43 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/16 14:07:49 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 11:04:21 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+/*
+void philo_cycle(t_philo *philo)
+{
+	philo think - usleep N ms?
+	pick up left fork - lock mutex?
+	pick up right fork - lock mutex?
+	philo eat - usleep N ms?
+	put down left fork - unlock mutex?
+	put down right fork - unlock mutex?
+}
+*/
 
 static void	handle_mutex_error(int status)
 {
