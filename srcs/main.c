@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/16 16:16:35 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:07:20 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,28 @@ void	ft_error(char *str) // pass t_simu, free allocated memory if any existss
 	exit(EXIT_FAILURE);
 }
 
+void	*test_routine(void *data)
+{
+	int	*i;
 
+	i = (int *)data;
+	printf("thread %d initialized.\n", *(int *)data);
+	return NULL;
+}
 
+void	init_threads(t_simu *simu)
+{
+	int	i;
+
+	i = 0;
+	while (i < simu->seats)
+	{
+		handle_thread_op((simu->philosophers->th_id + 1), test_routine, &i, TH_CREATE);
+		i++;
+	}
+}
+// main function has its own thread
+// also need extra thread for monitoring philos
 int main(int argc, char **argv)
 {
 	t_simu	simu;
@@ -62,12 +82,13 @@ int main(int argc, char **argv)
 			ft_error("invalid argument");
 
 		simu.philosophers = alloc_philos(&simu);
-		simu.forks = alloc_forks(&simu);
-
-		//print_sim_values(&simu);
-
+		simu.forks = alloc_forks(&simu); // also assigns forks, sequentially atm.
 		simu.sim_end = false;
-		gettimeofday(&simu.start, NULL);
+		init_threads(&simu);
+		print_sim_values(&simu);
+
+
+
 
 		free(simu.philosophers);
 		free(simu.forks);

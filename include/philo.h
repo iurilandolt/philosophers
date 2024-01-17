@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/16 14:07:53 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:59:05 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ typedef struct s_simu
 	int		time_to_die;
 	int		time_to_eat;
 	int		time_to_sleep;
-	struct	timeval start; // should be long?
 	t_philo	*philosophers;
 	t_fork	*forks;
+	long	sim_start;
 	bool	sim_end; // sim ends when a philo dies or all philos are full
 }	t_simu;
 
