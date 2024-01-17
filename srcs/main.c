@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 15:27:22 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 17:16:21 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ void	ft_error(char *str) // pass t_simu, free allocated memory if any existss
 
 void	*test_routine(void *data)
 {
-	int	*i;
-
-	i = (int *)data;
 	printf("thread %d initialized.\n", *(int *)data);
 	return NULL;
 }
@@ -65,7 +62,10 @@ void	init_threads(t_simu *simu)
 	i = 0;
 	while (i < simu->seats)
 	{
-		handle_thread_op((simu->philosophers->th_id + 1), test_routine, &i, TH_CREATE);
+		handle_thread_op((simu->philosophers + i)->th_id, test_routine, &i, TH_CREATE);
+		handle_mutex_op(&(simu->philosophers + i)->left->fork, MTX_INIT);
+		handle_mutex_op(&(simu->philosophers + i)->left->fork, MTX_LOCK);
+		usleep(30);
 		i++;
 	}
 }
@@ -79,13 +79,14 @@ int main(int argc, char **argv)
 	if (argc > 4 && argc < 7)
 	{
 		if (!init_sim_values(&simu, argc, argv))
-			ft_error("invalid argument");
+			ft_error("Invalid arguments.");
 
 		simu.philosophers = alloc_philos(&simu);
 		simu.forks = alloc_forks(&simu); // also assigns forks, sequentially atm.
+		init_threads(&simu);
 		simu.sim_end = false;
 		simu.sim_start = get_time_s();
-		init_threads(&simu);
+
 		print_sim_values(&simu);
 
 

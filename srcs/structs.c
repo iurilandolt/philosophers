@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:15:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 15:05:18 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:31:38 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,18 @@ t_fork	*alloc_forks(t_simu *simu)
 	i = 0;
 	while (i < simu->seats)
 	{
-		(new + i)->index = i + 1;
-		(simu->philosophers + i)->left = new + i;
-		(simu->philosophers + i)->right = new + ((i + 1) % simu->seats);
+		(new + i)->index = i;
+		if ((new + i)->index % 2) // odd
+		{
+			(simu->philosophers + i)->left = new + ((i + 1) % simu->seats);
+			(simu->philosophers + i)->right = new + i;
+
+		}
+		else // even
+		{
+			(simu->philosophers + i)->right = new + ((i + 1) % simu->seats);
+			(simu->philosophers + i)->left = new + i;
+		}
 		i++;
 	}
 	return (new);
@@ -58,6 +67,7 @@ static void print_philo_values(t_philo *philo)
 	printf("last_meal: %ld\n", philo->last_meal);
 	printf("left fork: %d\n", philo->left->index);
 	printf("right fork: %d\n\n", philo->right->index);
+
 }
 
 void	print_sim_values(t_simu *simu)
