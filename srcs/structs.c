@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:15:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 18:31:38 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/17 19:48:08 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static void print_philo_values(t_philo *philo)
 	printf("last_meal: %ld\n", philo->last_meal);
 	printf("left fork: %d\n", philo->left->index);
 	printf("right fork: %d\n\n", philo->right->index);
-
 }
 
 void	print_sim_values(t_simu *simu)
@@ -80,7 +79,7 @@ void	print_sim_values(t_simu *simu)
 	printf("-> time_to_eat: %d\n", simu->time_to_eat);
 	printf("-> time_to_sleep: %d\n", simu->time_to_sleep);
 	printf("-> meal_goal: %d\n", simu->meal_goal);
-	printf("-> sim started: %ld\n", simu->sim_start);
+	printf("-> sim started: %ld\n", simu->sim_srt);
 	printf("-> sim ended: %s\n\n", simu->sim_end ? "true" : "false");
 	while (i < simu->seats)
 	{
