@@ -6,13 +6,12 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:12:55 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 22:18:20 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:19:10 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-/*add custom usleep func?*/
 long	get_time_s(void)
 {
 	struct timeval	tv;
@@ -37,9 +36,5 @@ long	get_time_mcs(void)
 
 	if (gettimeofday(&tv, NULL))
 		ft_error("gettimeofday failed.");
-	return (tv.tv_sec * 1e6 + tv.tv_sec * 1e6);
+	return ((tv.tv_sec * 1e6) + tv.tv_usec);
 }
-
-// spinlock ?
-
-

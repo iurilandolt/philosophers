@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/17 22:32:41 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:50:51 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,26 @@ typedef struct s_simu
 	long	sim_srt;
 	bool	sim_end; // sim ends when a philo dies or all philos are full
 	bool	sim_rdy;
-
 }	t_simu;
 
 typedef struct s_monitor
 {
 	t_simu	*simu;
 	t_philo	*philo;
+	pthread_t	th_id;
 	pthread_mutex_t	mtx;
 }	t_monitor;
 
 int	init_sim_values(t_simu *simu, int argc, char **argv);
 
 void	handle_mutex_op(pthread_mutex_t *mtx, t_mtxcode op);
-void	handle_thread_op(pthread_t	thread, void *(*func)(void *), void *data, t_thcode op); // function name and arguments must be shorter xD
+void	handle_thread_op(pthread_t	*thread, void *(*func)(void *), void *data, t_thcode op); // function name and arguments must be shorter xD
+void	init_threads(t_simu *simu, t_monitor *mon);
+void	join_threads(t_simu *simu, t_monitor *mon);
+void	detach_threads(t_simu *simu);
 
 void	ft_error(char *str);
+
 void	print_sim_values(t_simu *simu);
 
 t_philo	*alloc_philos(t_simu *simu);
