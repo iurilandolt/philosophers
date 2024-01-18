@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:42:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/18 18:57:48 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/18 19:24:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,13 @@ void philo_cycle(t_philo *philo)
 }
 */
 
-bool get_bool(pthread_mutex_t *mtx, bool *value)
-{
-	bool	ret;
-
-	handle_mutex_op(mtx, MTX_LOCK);
-	ret = *value;
-	handle_mutex_op(mtx, MTX_UNLOCK);
-	return (ret);
-}
 
 //spinlock / busy waiting
-void	wait_for_threads(t_simu *simu, t_monitor *mon)
+
+
+void	wait_for_threads(t_simu *simu)
 {
-	while (!get_bool(&mon->mtx, &simu->sim_rdy))
+	while (!simu->sim_rdy)
 		;
 }
 
@@ -46,7 +39,7 @@ void	*sim_routine(void *data)
 	t_monitor	*mon;
 
 	mon = (t_monitor *)data;
-	wait_for_threads(mon->simu, mon);
+	wait_for_threads(mon->simu);
 	return NULL;
 }
 

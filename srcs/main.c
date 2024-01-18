@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/18 18:41:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/18 19:24:35 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ bool get_bool(pthread_mutex_t *mtx, bool *value)
 	return (ret);
 }
 
+void	wait_for_threads(t_simu *simu, t_monitor *mon)
+{
+	while (!get_bool(&mon->mtx, &simu->sim_rdy))
+		;
+}
+
 */
 void	ft_error(char *str) // pass t_simu, free allocated memory if any existss
 {
@@ -94,11 +100,9 @@ void *start_sim(t_simu *simu, t_monitor *mon)
 
 	init_threads(simu, mon); // leak is here d^.^b
 
-
 	handle_mutex_op(&mon->mtx, MTX_LOCK);
 	simu->sim_rdy = true;
 	simu->sim_srt = get_time_mls();
-
 	handle_mutex_op(&mon->mtx, MTX_UNLOCK);
 
 	join_threads(simu, mon);
