@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 15:23:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:19:30 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,21 @@ void	*mon_routine(void *data)
 {
 	t_monitor	*mon;
 
-
 	mon = (t_monitor *)data;
 	wait_for_threads(mon->simu, mon); // monitor might not need to wait for threads
-	// monitor routine goes here ?//
 
-	mon->th_id = pthread_self();
-	printf("Monit Thread ID: %lu is ready.\n", (unsigned long) mon->th_id);
+	while (!get_bool(&mon->loop_mtx, &mon->simu->sim_end))
+	{
+		int i = 0;
+		while (i < mon->simu->seats)
+		{
 
+			mon->philo = (mon->simu->philosophers + i);
+			i++;
+		}
+	}
+	//mon->th_id = pthread_self();
+	//printf("Monit Thread ID: %lu is ready.\n", (unsigned long) mon->th_id);
 	return NULL;
 }
 
@@ -43,6 +50,7 @@ void	init_monitor(t_simu *simu, t_monitor *mon)
 
 	handle_mutex_op(&mon->mon_mtx, MTX_INIT);
 	handle_mutex_op(&mon->write_mtx, MTX_INIT);
+	handle_mutex_op(&mon->loop_mtx, MTX_INIT);
 
 	handle_thread_op(&mon->th_id, mon_routine, mon, TH_CREATE);
 	handle_thread_op(&mon->th_id, NULL, NULL, TH_DETACH);

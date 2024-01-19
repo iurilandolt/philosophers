@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:42:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 16:21:36 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:08:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,12 @@ void	print_status(t_monitor *mon, t_philo *philo, char *status)
 	long	elapsed;
 
 
-	elapsed = get_time_mls() - mon->simu->sim_srt;
 
+	elapsed = get_time_mls() - mon->simu->sim_srt;
 	handle_mutex_op(&mon->write_mtx, MTX_LOCK);
 
-	printf(W"%-6ld"RST" : %d : %s\n", elapsed, philo->index, status);
+	printf(W"%-6ldms"RST" : philo#%d : %s\n", elapsed, philo->index, status);
+
 
 	handle_mutex_op(&mon->write_mtx, MTX_UNLOCK);
 }
@@ -79,7 +80,7 @@ void	*sim_routine(void *data)
 		//think
 		//set_bool(&mon->mon_mtx, &mon->simu->sim_end, true);
 	}
-	//mon->th_id = pthread_self();
+	//philo->th_id = pthread_self();
 	//printf("Philo Thread ID: %lu is ready.\n", (unsigned long) mon->th_id);
 	return NULL;
 }
@@ -103,7 +104,7 @@ void	all_threads_do(t_simu *simu, t_monitor *mon, t_thcode op)
 		else if (op == TH_DETACH)
 			handle_thread_op(&mon->philo->th_id, NULL, NULL, TH_DETACH);
 		i++;
-		usleep(100);
+		usleep(10);
 	}
 }
 
