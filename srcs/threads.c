@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:42:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 00:30:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 01:28:04 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	wait_for_threads(t_simu *simu)
 {
-	while (!simu->sim_rdy)
+	while (!simu->sim_rdy) // race condition ?
 		;
 }
 
@@ -31,7 +31,6 @@ void	*sim_routine(void *data)
 
 
 //handle_thread_op(mon->th_id, mon_routine, mon, TH_CREATE);
-//syncronize and join all threads
 // init monitor here? make monitor wait for threads?
 // monitor join or detach?
 
