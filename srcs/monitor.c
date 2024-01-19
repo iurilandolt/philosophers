@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 12:25:09 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:59:07 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,40 +61,16 @@ iterate trhough philos, check last_meal time vs time_to_die // philo_is_dead()
 set index 0 if philo died, +1 to dead count, if dead count == seats, sim_end = true
 check if philo is full, if philo is full +1 full count, if full count == seats, sim_end = true
 */
-int	philo_is_dead(t_philo *philo, int time_to_die)
-{
-	if (get_time_mls() - philo->last_meal > time_to_die) // get time mcs?
-		return (1);
-	return (0);
-}
 
 void	*mon_routine(void *data)
 {
 	t_monitor	*mon;
-	int			i;
-	//int			full;
-	//int 		dead;
+
 
 	mon = (t_monitor *)data;
-	i = 0;
-	handle_mutex_op(&mon->mon_mtx, MTX_INIT);
-	handle_mutex_op(&mon->loop_mtx, MTX_INIT);
 
-	while (!check_sim_end(mon->simu, mon))
-	{
-		while (i < mon->simu->seats)
-		{
-			if ((mon->simu->philosophers + i)->index == 3)
-			{
-				set_sim_end(mon->simu, mon, true);
-				break;
-			}
-			printf("philo %d is alive\n", i + 1);
-			i++;
-		}
-		printf("sim has ended %s\n", mon->simu->sim_end ? "true" : "false");
-	}
-
+	mon->th_id = pthread_self();
+	printf("Monit Thread ID: %lu is ready.\n", (unsigned long) mon->th_id);
 
 	return NULL;
 }
@@ -102,8 +78,12 @@ void	*mon_routine(void *data)
 void	init_monitor(t_simu *simu, t_monitor *mon)
 {
 	mon->simu = simu;
+
+	handle_mutex_op(&mon->mon_mtx, MTX_INIT);
+	handle_mutex_op(&mon->loop_mtx, MTX_INIT);
+
 	handle_thread_op(&mon->th_id, mon_routine, mon, TH_CREATE);
-	handle_thread_op(&mon->th_id, NULL, NULL, TH_DETACH);
+	handle_thread_op(&mon->th_id, NULL, NULL, TH_JOIN);
 }
 
 /*

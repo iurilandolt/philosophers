@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/15 18:21:04 by rlandolt          #+#    #+#              #
-#    Updated: 2024/01/19 11:38:38 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/01/19 12:57:31 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
 		@ar -rcs $@ $(OBJ)
-		@${CC} ${CFLAGS} -o philosophers ${NAME}
+		@${CC} ${CFLAGS} -o philosophers ${NAME} ${SANITIZER}
 		@rm -f $(NAME)
 
 all: $(NAME)

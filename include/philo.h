@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 12:03:42 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:58:29 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	init_sim_values(t_simu *simu, int argc, char **argv);
 void	handle_mutex_op(pthread_mutex_t *mtx, t_mtxcode op);
 void	handle_thread_op(pthread_t	*thread, void *(*func)(void *), void *data, t_thcode op); // function name and arguments must be shorter xD
 
-
+void	wait_for_threads(t_simu *simu);
 
 void	init_threads(t_simu *simu, t_monitor *mon);
 void	init_monitor(t_simu *simu, t_monitor *mon);
