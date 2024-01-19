@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/15 18:21:04 by rlandolt          #+#    #+#              #
-#    Updated: 2024/01/18 23:27:53 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/01/19 11:38:38 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/structs.c \
 	$(SRC_PATH)/time.c \
 	$(SRC_PATH)/threads.c \
+	$(SRC_PATH)/monitor.c \
 
 SANITIZER = -fsanitize=thread
 
