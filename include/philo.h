@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 14:40:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:11:06 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_monitor
 	t_philo	*philo;
 	pthread_t	th_id;
 	pthread_mutex_t	mon_mtx;
+	pthread_mutex_t	write_mtx;
 	pthread_mutex_t	loop_mtx;
 }	t_monitor;
 
@@ -98,6 +99,7 @@ void	init_monitor(t_simu *simu, t_monitor *mon);
 
 
 void	ft_error(char *str);
+void	ft_usleep(t_simu *simu, long time);
 bool	get_bool(pthread_mutex_t *mtx, bool *value);
 
 

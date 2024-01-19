@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:12:55 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/18 17:19:10 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:06:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,27 @@ long	get_time_mcs(void)
 	if (gettimeofday(&tv, NULL))
 		ft_error("gettimeofday failed.");
 	return ((tv.tv_sec * 1e6) + tv.tv_usec);
+}
+
+void	ft_usleep(t_simu *simu, long time)
+{
+	long	start;
+	long	remain;
+	long	elapsed;
+
+	start = get_time_mcs();
+	while (get_time_mcs() - start < time)
+	{
+		if (simu->sim_end) // race condition ?
+			break ;
+		elapsed = get_time_mcs() - start;
+		remain = time - elapsed;
+		if (remain > 1e3)
+			usleep(remain / 2);
+		else
+		{
+			while (get_time_mcs() - start < time)
+				;
+		}
+	}
 }

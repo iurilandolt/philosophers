@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 13:18:46 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 16:05:23 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void *start_sim(t_simu *simu, t_monitor *mon)
 	simu->forks = alloc_forks(simu);
 
 	init_monitor(simu, mon);
+
 	all_threads_do(simu, mon, TH_CREATE);
 
 	handle_mutex_op(&mon->mon_mtx, MTX_LOCK);
@@ -38,7 +39,7 @@ void *start_sim(t_simu *simu, t_monitor *mon)
 	simu->sim_srt = get_time_mls();
 	handle_mutex_op(&mon->mon_mtx, MTX_UNLOCK);
 
-	all_threads_do(simu, mon, TH_JOIN);
+	all_threads_do(simu, mon, TH_JOIN); // if we get here all philos are dead or full?
 
 	printf("-> sim ready: %s @ %ld\n", simu->sim_rdy ? "true" : "false", simu->sim_srt);
 

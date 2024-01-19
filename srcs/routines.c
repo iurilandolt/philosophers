@@ -6,14 +6,25 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 23:30:03 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 00:11:49 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:29:52 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 
-void	think(t_philo *philo)
+void	print_status(char *status, t_monitor *mon)
+{
+	long	elapsed;
+
+	elapsed = mon->simu->sim_srt;
+	handle_mutex_op(&mon->write_mtx, MTX_LOCK);
+	printf(W"%-6ld"RST" : %d : %s\n",  elapsed - get_time_mls(), mon->philo->index, status);
+	handle_mutex_op(&mon->write_mtx, MTX_UNLOCK);
+}
+
+
+void	think(t_simu *simu, t_philo *philo)
 {
 	printf("%ld %d is thinking\n", get_time_mls(), philo->index);
 }

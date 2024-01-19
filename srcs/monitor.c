@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 14:49:53 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:23:05 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_monitor(t_simu *simu, t_monitor *mon)
 	mon->simu = simu;
 
 	handle_mutex_op(&mon->mon_mtx, MTX_INIT);
-	//handle_mutex_op(&mon->loop_mtx, MTX_INIT);
+	handle_mutex_op(&mon->write_mtx, MTX_INIT);
 
 	handle_thread_op(&mon->th_id, mon_routine, mon, TH_CREATE);
 	handle_thread_op(&mon->th_id, NULL, NULL, TH_DETACH);
