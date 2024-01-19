@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 00:49:03 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 01:30:51 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	*mon_routine(void *data)
 		i = 0;
 		while (i < mon->simu->seats)
 		{
+			// get dead set dead mutex and funcs
 			i++;
 		}
 	}
