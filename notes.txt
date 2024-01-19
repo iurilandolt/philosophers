@@ -26,3 +26,45 @@ void	wait_for_threads(t_simu *simu, t_monitor *mon)
 }
 
 */
+
+bool	check_sim_end(t_simu *simu, t_monitor *mon)
+{
+	bool	status;
+
+	handle_mutex_op(&mon->loop_mtx, MTX_LOCK);
+	status = simu->sim_end;
+	handle_mutex_op(&mon->loop_mtx, MTX_UNLOCK);
+	return (status);
+}
+
+bool	set_sim_end(t_simu *simu, t_monitor *mon, bool value)
+{
+	bool	status;
+
+	handle_mutex_op(&mon->loop_mtx, MTX_LOCK);
+	simu->sim_end = value;
+	status = simu->sim_end;
+	handle_mutex_op(&mon->loop_mtx, MTX_UNLOCK);
+	return (status);
+}
+
+
+bool get_bool(pthread_mutex_t *mtx, bool *value)
+{
+	bool	ret;
+
+	handle_mutex_op(mtx, MTX_LOCK);
+	ret = *value;
+	handle_mutex_op(mtx, MTX_UNLOCK);
+	return (ret);
+}
+
+int	get_int(pthread_mutex_t *mtx, int *value)
+{
+	int	ret;
+
+	handle_mutex_op(mtx, MTX_LOCK);
+	ret = *value;
+	handle_mutex_op(mtx, MTX_UNLOCK);
+	return (ret);
+}
