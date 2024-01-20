@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 13:46:54 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:06:16 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print_status(t_monitor *mon, t_philo *philo, char *status)
 
 	elapsed = get_time_mls() - mon->simu->sim_srt;
 	handle_mutex_op(&mon->write_mtx, MTX_LOCK);
-	printf(W"%-6ldms"RST" : Philosopher #%d : %s\n", elapsed, philo->index, status);
+	printf(W"%-6ldms"RST" : "C"Philosopher"RST" #%-3d : %s\n", elapsed, philo->index, status);
 	handle_mutex_op(&mon->write_mtx, MTX_UNLOCK);
 }
 
@@ -46,11 +46,8 @@ void	init_monitor(t_simu *simu, t_monitor *mon)
 
 	handle_mutex_op(&mon->mon_mtx, MTX_INIT);
 	handle_mutex_op(&mon->write_mtx, MTX_INIT);
-	//handle_mutex_op(&mon->loop_mtx, MTX_INIT);
-
-
-	//handle_thread_op(&mon->th_id, mon_routine, mon, TH_CREATE);
-	//handle_thread_op(&mon->th_id, NULL, NULL, TH_DETACH);
+	handle_mutex_op(&mon->loop_mtx, MTX_INIT);
+	handle_thread_op(&mon->th_id, mon_routine, mon, TH_CREATE);
 }
 
 

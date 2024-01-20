@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 01:03:38 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 14:05:04 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdbool.h>
 # include <limits.h>
 
-# define R		"\033[0;31m"
+# define R	"\033[0;31m"
 # define G		"\033[0;32m"
 # define B		"\033[0;34m"
 # define W		"\033[0;37m"

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:42:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 13:50:32 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:10:36 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool is_dead(t_monitor *mon, t_philo *philo)
 	elapsed = get_time_mls() - philo->last_meal;
 	if (elapsed > mon->simu->time_to_die)
 	{
-		print_status(mon, philo, "has died.");
+		print_status(mon, philo, M"has died."RST);
 		return (true);
 	}
 	return (false);
@@ -31,7 +31,7 @@ bool	is_full(t_monitor *mon, t_philo *philo)
 		return (false);
 	if (philo->meals >= mon->simu->meal_goal)
 	{
-		print_status(mon, philo, "is full.");
+		print_status(mon, philo, G"is full."RST);
 		return (true);
 	}
 	return (false);
@@ -50,6 +50,7 @@ void	*mon_routine(void *data)
 
 	mon->th_id = pthread_self();
 	printf("Monit Thread ID: %lu is gone.\n", (unsigned long) mon->th_id);
+	handle_thread_op(&mon->th_id, NULL, NULL, TH_DETACH);
 	return NULL;
 }
 
@@ -74,12 +75,22 @@ void	eat(t_monitor *mon, t_philo *philo)
 	print_status(mon, philo, "has taken a fork.");
 	philo->last_meal = get_time_mls();
 	philo->meals++;
-	print_status(mon, philo, "is eating.");
+	print_status(mon, philo, G"is eating."RST);
 	ft_usleep(mon->simu, mon->simu->time_to_eat);
-
-	handle_mutex_op(first, MTX_UNLOCK);
 	handle_mutex_op(second, MTX_UNLOCK);
+	handle_mutex_op(first, MTX_UNLOCK);
+}
 
+bool	lone_philo(t_monitor *mon, t_philo *philo)
+{
+	if (mon->simu->seats == 1)
+	{
+		ft_usleep(mon->simu, mon->simu->time_to_die);
+		set_bool(&mon->mon_mtx, &mon->simu->sim_end, true);
+		print_status(mon, philo, M"has died."RST);
+		return (true);
+	}
+	return (false);
 }
 
 void	*sim_routine(void *data)
@@ -94,15 +105,19 @@ void	*sim_routine(void *data)
 	philo->last_meal = get_time_mls();
 	while (!get_bool(&mon->mon_mtx, &mon->simu->sim_end))
 	{
-
+		if (lone_philo(mon, philo))
+			break;
 		philo->full = is_full(mon, philo);
 		philo->dead = is_dead(mon, philo);
 		if (philo->full || philo->dead)
 			break ;
 
-		print_status(mon, philo, "is thinking.");
-		eat(mon, philo);
-		print_status(mon, philo, "is sleeping.");
+		print_status(mon, philo, Y"is thinking."RST);
+		ft_usleep(mon->simu, mon->simu->seats * 100);
+
+		eat(mon, philo); // tryna eat
+
+		print_status(mon, philo, B"is sleeping."RST);
 		ft_usleep(mon->simu, mon->simu->time_to_sleep);
 
 		//eat
