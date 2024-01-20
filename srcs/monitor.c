@@ -6,37 +6,39 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 00:41:04 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 01:02:44 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-/*
-func for monitoring sim end
-
-iterate trhough philos, check last_meal time vs time_to_die // philo_is_dead()
-
-set index 0 if philo died, +1 to dead count, if dead count == seats, sim_end = true
-
-check if philo is full, if philo is full +1 full count, if full count == seats, sim_end = true
-*/
-
-void	*mon_routine(void *data)
+void set_bool(pthread_mutex_t *mtx, bool *var, bool value)
 {
-	t_monitor	*mon;
-
-	mon = (t_monitor *)data;
-	wait_for_threads(mon->simu, mon); // monitor might not need to wait for threads
-	while (!mon->simu->sim_end) // get_bool(&mon->loop_mtx, &mon->simu->sim_end)
-	{
-		;
-	}
-
-	mon->th_id = pthread_self();
-	printf("Monit Thread ID: %lu is gone.\n", (unsigned long) mon->th_id);
-	return NULL;
+	handle_mutex_op(mtx, MTX_LOCK);
+	*var = value;
+	handle_mutex_op(mtx, MTX_UNLOCK);
 }
+
+bool get_bool(pthread_mutex_t *mtx, bool *value)
+{
+	bool	ret;
+
+	handle_mutex_op(mtx, MTX_LOCK);
+	ret = *value;
+	handle_mutex_op(mtx, MTX_UNLOCK);
+	return (ret);
+}
+
+void	print_status(t_monitor *mon, t_philo *philo, char *status)
+{
+	long	elapsed;
+
+	elapsed = get_time_mls() - mon->simu->sim_srt;
+	handle_mutex_op(&mon->write_mtx, MTX_LOCK);
+	printf(W"%-6ldms"RST" : philo#%d : %s\n", elapsed, philo->index, status);
+	handle_mutex_op(&mon->write_mtx, MTX_UNLOCK);
+}
+
 
 void	init_monitor(t_simu *simu, t_monitor *mon)
 {

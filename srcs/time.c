@@ -6,19 +6,16 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:12:55 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 18:08:16 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 01:04:55 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-long	get_time_s(void)
+//spinlock
+void	wait_for_threads(t_simu *simu, t_monitor *mon)
 {
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL))
-		ft_error("gettimeofday failed.");
-	return (tv.tv_sec + tv.tv_usec / 1e6);
+	while (!get_bool(&mon->mon_mtx, &simu->sim_rdy))
+		;
 }
 
 long get_time_mls(void) {
