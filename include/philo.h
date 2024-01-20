@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 14:05:04 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 18:42:37 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,17 @@ void	handle_mutex_op(pthread_mutex_t *mtx, t_mtxcode op);
 void	handle_thread_op(pthread_t	*thread, void *(*func)(void *), void *data, t_thcode op); // function name and arguments must be shorter xD
 
 void	wait_for_threads(t_simu *simu, t_monitor *mon);
+bool	lone_thread(t_monitor *mon, t_philo *philo);
 void	all_threads_do(t_simu *simu, t_monitor *mon, t_thcode op);
+void	*sim_routine(void *data);
+void	eat(t_monitor *mon, t_philo *philo);
+bool	is_dead(t_monitor *mon, t_philo *philo);
+bool	is_full(t_monitor *mon, t_philo *philo);
+
 
 void	init_monitor(t_simu *simu, t_monitor *mon);
 void	*mon_routine(void *data);
+
 void	print_status(t_monitor *mon, t_philo *philo, char *status);
 
 void	ft_error(char *str);

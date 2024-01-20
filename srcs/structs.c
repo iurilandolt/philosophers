@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:15:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 00:15:51 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 19:08:46 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_fork	*alloc_forks(t_simu *simu)
 	}
 	return (new);
 }
-/*
+
 static void print_philo_values(t_philo *philo)
 {
 	printf("philo: %d\nmeals: %d\n", philo->index, philo->meals);
@@ -69,7 +69,7 @@ static void print_philo_values(t_philo *philo)
 	printf("left fork: %d\n", philo->left->index);
 	printf("right fork: %d\n\n", philo->right->index);
 }
-*/
+
 void	print_sim_values(t_simu *simu)
 {
 	int	i;
@@ -84,7 +84,7 @@ void	print_sim_values(t_simu *simu)
 	printf("-> sim ended: %s\n\n", simu->sim_end ? "true" : "false");
 	while (i < simu->seats)
 	{
-		//print_philo_values((simu->philosophers + i));
+		print_philo_values((simu->philosophers + i));
 		i++;
 	}
 }
