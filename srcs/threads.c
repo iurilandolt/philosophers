@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:42:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 00:26:32 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 00:31:07 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ void	*sim_routine(void *data)
 	while (!get_bool(&mon->mon_mtx, &mon->simu->sim_end))
 	{
 
+		philo->dead = is_dead(mon, philo);
 		if (philo->full || philo->dead)
 			break ;
-		philo->dead = is_dead(mon, philo);
+
 		print_status(mon, philo, "is thinking.");
 
 		//eat
