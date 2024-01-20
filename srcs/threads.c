@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:42:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 12:53:57 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:50:32 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,35 @@ void	*mon_routine(void *data)
 	return NULL;
 }
 
+void	eat(t_monitor *mon, t_philo *philo)
+{
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
+
+	if (philo->index % 2) // odd -> picks left fork first
+	{
+		first = &philo->left->fork;
+		second = &philo->right->fork;
+	}
+	else // even -> picks right fork first
+	{
+		first = &philo->right->fork;
+		second = &philo->left->fork;
+	}
+	handle_mutex_op(first, MTX_LOCK);
+	print_status(mon, philo, "has taken a fork.");
+	handle_mutex_op(second, MTX_LOCK);
+	print_status(mon, philo, "has taken a fork.");
+	philo->last_meal = get_time_mls();
+	philo->meals++;
+	print_status(mon, philo, "is eating.");
+	ft_usleep(mon->simu, mon->simu->time_to_eat);
+
+	handle_mutex_op(first, MTX_UNLOCK);
+	handle_mutex_op(second, MTX_UNLOCK);
+
+}
+
 void	*sim_routine(void *data)
 {
 	t_monitor	*mon;
@@ -66,11 +95,15 @@ void	*sim_routine(void *data)
 	while (!get_bool(&mon->mon_mtx, &mon->simu->sim_end))
 	{
 
+		philo->full = is_full(mon, philo);
 		philo->dead = is_dead(mon, philo);
 		if (philo->full || philo->dead)
 			break ;
 
 		print_status(mon, philo, "is thinking.");
+		eat(mon, philo);
+		print_status(mon, philo, "is sleeping.");
+		ft_usleep(mon->simu, mon->simu->time_to_sleep);
 
 		//eat
 		//sleep
@@ -103,7 +136,7 @@ void	all_threads_do(t_simu *simu, t_monitor *mon, t_thcode op)
 		else if (op == TH_DETACH)
 			handle_thread_op(&mon->philo->th_id, NULL, NULL, TH_DETACH);
 		i++;
-		//usleep(1);
+		usleep(10);
 	}
 }
 

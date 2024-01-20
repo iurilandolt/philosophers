@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:42:03 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/15 18:49:53 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:10:19 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static int	validate_arg(char *str)
 			return (0);
 		i++;
 	}
-
 	return (1);
 }
 

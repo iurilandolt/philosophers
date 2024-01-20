@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:12:55 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 01:04:55 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:10:12 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_usleep(t_simu *simu, long time)
 	start = get_time_mcs();
 	while (get_time_mcs() - start < time)
 	{
-		if (simu->sim_end) // race condition ?
+		if (simu->sim_end) // race condition ? value checked my multiple threads
 			break ;
 		elapsed = get_time_mcs() - start;
 		remain = time - elapsed;
