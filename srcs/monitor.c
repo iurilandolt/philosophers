@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 18:19:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 00:23:51 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,39 @@ check if philo is full, if philo is full +1 full count, if full count == seats, 
 void	*mon_routine(void *data)
 {
 	t_monitor	*mon;
+	t_philo		*philo;
+	int 		i;
+	int			dead_count;
+	int			full_count;
 
 	mon = (t_monitor *)data;
 	wait_for_threads(mon->simu, mon); // monitor might not need to wait for threads
-
-	while (!get_bool(&mon->loop_mtx, &mon->simu->sim_end))
+	dead_count = 0;
+	full_count = 0;
+	while (!get_bool(&mon->loop_mtx, &mon->simu->sim_end)) // get_bool(&mon->loop_mtx, &mon->simu->sim_end)
 	{
-		int i = 0;
+		i = 0;
+		if (dead_count == mon->simu->seats || full_count == mon->simu->seats)
+		{
+			//mon->simu->sim_end = true;
+			break ;
+		}
 		while (i < mon->simu->seats)
 		{
-
-			mon->philo = (mon->simu->philosophers + i);
+			philo = mon->simu->philosophers + i;
+			if (philo->dead)
+				dead_count++;
+			if (philo->full)
+				full_count++;
 			i++;
 		}
+
 	}
-	//mon->th_id = pthread_self();
-	//printf("Monit Thread ID: %lu is ready.\n", (unsigned long) mon->th_id);
+	set_bool(&mon->loop_mtx, &mon->simu->sim_end, true);
+	mon->th_id = pthread_self();
+	printf("Monit Thread ID: %lu is gone.\n", (unsigned long) mon->th_id);
+	printf("dead count: %d\n", dead_count);
+	printf("full count: %d\n", full_count);
 	return NULL;
 }
 
@@ -51,6 +68,7 @@ void	init_monitor(t_simu *simu, t_monitor *mon)
 	handle_mutex_op(&mon->mon_mtx, MTX_INIT);
 	handle_mutex_op(&mon->write_mtx, MTX_INIT);
 	handle_mutex_op(&mon->loop_mtx, MTX_INIT);
+
 
 	handle_thread_op(&mon->th_id, mon_routine, mon, TH_CREATE);
 	handle_thread_op(&mon->th_id, NULL, NULL, TH_DETACH);

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/19 15:11:06 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/19 23:43:59 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_philo
 	int			meals;
 	long		last_meal;
 	bool		full;
+	bool		dead;
 	t_fork		*left;
 	t_fork		*right;
 
@@ -85,6 +86,7 @@ typedef struct s_monitor
 	pthread_mutex_t	mon_mtx;
 	pthread_mutex_t	write_mtx;
 	pthread_mutex_t	loop_mtx;
+	pthread_mutex_t	dead_mtx;
 }	t_monitor;
 
 int	init_sim_values(t_simu *simu, int argc, char **argv);
@@ -101,7 +103,7 @@ void	init_monitor(t_simu *simu, t_monitor *mon);
 void	ft_error(char *str);
 void	ft_usleep(t_simu *simu, long time);
 bool	get_bool(pthread_mutex_t *mtx, bool *value);
-
+void	set_bool(pthread_mutex_t *mtx, bool *var, bool value);
 
 
 void	print_sim_values(t_simu *simu);
