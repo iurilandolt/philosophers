@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:42:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 01:03:13 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 12:53:57 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ bool is_dead(t_monitor *mon, t_philo *philo)
 
 bool	is_full(t_monitor *mon, t_philo *philo)
 {
+	if (mon->simu->meal_goal <= 0)
+		return (false);
 	if (philo->meals >= mon->simu->meal_goal)
 	{
 		print_status(mon, philo, "is full.");
@@ -101,7 +103,7 @@ void	all_threads_do(t_simu *simu, t_monitor *mon, t_thcode op)
 		else if (op == TH_DETACH)
 			handle_thread_op(&mon->philo->th_id, NULL, NULL, TH_DETACH);
 		i++;
-		usleep(10);
+		//usleep(1);
 	}
 }
 

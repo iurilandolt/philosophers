@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 00:46:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:08:16 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void *start_sim(t_simu *simu, t_monitor *mon)
 	simu->forks = alloc_forks(simu);
 	init_monitor(simu, mon);
 	all_threads_do(simu, mon, TH_CREATE);
-	//handle_mutex_op(&mon->mon_mtx, MTX_LOCK);
+	handle_mutex_op(&mon->mon_mtx, MTX_LOCK);
 	simu->sim_rdy = true;
 	simu->sim_srt = get_time_mls();
-	//handle_mutex_op(&mon->mon_mtx, MTX_UNLOCK);
+	handle_mutex_op(&mon->mon_mtx, MTX_UNLOCK);
 	all_threads_do(simu, mon, TH_JOIN); // if we get here all philos are dead or full?
 	set_bool(&mon->mon_mtx, &simu->sim_end, true);
 	return (NULL);
