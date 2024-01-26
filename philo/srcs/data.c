@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 22:31:41 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/26 13:46:56 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/26 20:04:09 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,23 @@ t_fork	*alloc_forks(t_sim *sim)
 	return (new);
 }
 
+/*
+		(new + i)->index = i;
+		if ((sim->philosophers + i)->index % 2)
+		{
+			(sim->philosophers + i)->left = new + i;
+			(sim->philosophers + i)->right = new + ((i + 1) % sim->seats);
+			if (pthread_mutex_init(&(sim->philosophers + i)->left->mtx, NULL) != 0)
+				ft_error("pthread_mutex_init() failed.");
+		}
+		else
+		{
+			(sim->philosophers + i)->left = new + ((i + 1) % sim->seats);
+			(sim->philosophers + i)->right = new + i;
+			if (pthread_mutex_init(&(sim->philosophers + i)->right->mtx, NULL) != 0)
+				ft_error("pthread_mutex_init() failed.");
+		}
+*/
 
 void	*monitor(void *data)
 {
