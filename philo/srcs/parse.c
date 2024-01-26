@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:42:03 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/20 13:10:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:01:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,20 @@ int	ft_atoi(char *str)
 	return (n * sign);
 }
 
-int	init_sim_values(t_simu *simu, int argc, char **argv)
+int	check_boundaries(t_sim *sim)
+{
+	if (sim->seats < 1 || sim->seats > 200)
+		return (0);
+	if (sim->time_to_die < 60)
+		return (0);
+	if (sim->time_to_eat < 60)
+		return (0);
+	if (sim->time_to_sleep < 60)
+		return (0);
+	return (1);
+}
+
+int	parse(t_sim *sim, int argc, char **argv)
 {
 	if (!validate_arg(argv[1]) || !validate_arg(argv[2])
 		|| !validate_arg(argv[3]) || !validate_arg(argv[4])
@@ -67,21 +80,20 @@ int	init_sim_values(t_simu *simu, int argc, char **argv)
 		return (0);
 	else
 	{
-		simu->seats = ft_atoi(argv[1]);
-		simu->time_to_die = ft_atoi(argv[2]);
-		simu->time_to_eat = ft_atoi(argv[3]);
-		simu->time_to_sleep = ft_atoi(argv[4]);
-		if (simu->seats < 1 || simu->time_to_die < 1
-			|| simu->time_to_eat < 1 || simu->time_to_sleep < 1)
+		sim->seats = ft_atoi(argv[1]);
+		sim->time_to_die = ft_atoi(argv[2]);
+		sim->time_to_eat = ft_atoi(argv[3]);
+		sim->time_to_sleep = ft_atoi(argv[4]);
+		if (!check_boundaries(sim))
 			return (0);
 		if (argc == 6)
 		{
-			simu->meal_goal = ft_atoi(argv[5]);
-			if (simu->meal_goal < 1)
+			sim->goal = ft_atoi(argv[5]);
+			if (sim->goal < 1)
 				return (0);
 		}
 		else
-			simu->meal_goal = -1;
+			sim->goal = -1;
 	}
 	return (1);
 }
