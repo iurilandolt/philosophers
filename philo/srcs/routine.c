@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 01:37:47 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/26 13:43:42 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:16:51 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void	*philosopher(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-
+	pthread_mutex_lock(&philo->sim->mtx);
 	philo->last_meal = get_time();
-
+	pthread_mutex_unlock(&philo->sim->mtx);
 	if (lone_thread(philo))
 		return (NULL);
 	while (1)
