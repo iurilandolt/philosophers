@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/26 13:51:29 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/27 12:22:31 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 			exit_safe(sim);
 		startup(sim);
 		threads_create(sim);
-		//print_sim_values(sim);
+		print_sim_values(sim);
 		cleanup(sim);
 		free(sim);
 	}
