@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/26 14:15:21 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/27 13:11:48 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ bool	is_dead(t_philo *philo)
 		return (false);
 	else
 	{
-		//if (pthread_mutex_lock(&philo->sim->mtx) != 0)
-		//	ft_error("pthread_mutex_lock() failed.");
-		//philo->sim->ended = true;
-		//if (pthread_mutex_unlock(&philo->sim->mtx) != 0)
-		//	ft_error("pthread_mutex_unlock() failed.");
 		if (pthread_mutex_lock(&philo->mtx) != 0)
 			ft_error("pthread_mutex_lock() failed.");
 		philo->dead = true;
@@ -85,13 +80,15 @@ bool	lone_thread(t_philo *philo)
 		print_status(philo, "is thinking");
 		print_status(philo, "has picked up a fork");
 		ft_usleep(philo->lspan);
+		print_status(philo, M"has died."RST);
+
 		if (pthread_mutex_lock(&philo->sim->mtx) != 0)
 			ft_error("pthread_mutex_lock() failed.");
 		philo->sim->ended = true;
 		philo->dead = true;
 		if (pthread_mutex_unlock(&philo->sim->mtx) != 0)
 			ft_error("pthread_mutex_unlock() failed.");
-		print_status(philo, M"has died."RST);
+
 		return (true);
 	}
 	return (false);

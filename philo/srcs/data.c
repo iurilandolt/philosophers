@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 22:31:41 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/26 20:04:09 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/27 13:11:11 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	*monitor(void *data)
 
 	sim = (t_sim *)data;
 	full = 0;
+	ft_usleep(sim->seats);
 	while (1)
 	{
 		i = 0;

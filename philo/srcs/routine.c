@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 01:37:47 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/26 14:16:51 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/27 13:19:19 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	*philosopher(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
+
+
 	pthread_mutex_lock(&philo->sim->mtx);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->sim->mtx);
@@ -71,6 +73,8 @@ void	*philosopher(void *data)
 		//if (is_dead(philo))
 		//	break ;
 		print_status(philo, Y"is thinking"RST);
+		if (philo->sim->seats % 2 && philo->index % 2)
+			ft_usleep(5);
 		if (get_bool(&philo->sim->mtx, &philo->sim->ended))
 			break ;
 		//if (is_dead(philo))
