@@ -22,7 +22,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/status.c \
 	$(SRC_PATH)/forks.c
 
-SANITIZER = -g -fsanitize=thread
+SANITIZER = -g -pthread
 
 CC = cc -pthread
 CFLAGS = -Wall -Wextra -Werror

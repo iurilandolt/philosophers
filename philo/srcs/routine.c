@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 01:37:47 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/27 13:19:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/28 22:28:15 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	eat(t_philo *philo)
 		return ;
 	}
 	pickup_second_fork(philo);
-
 	if (pthread_mutex_lock(&philo->sim->mtx) != 0)
 		ft_error("pthread_mutex_lock() failed.");
 	philo->meals++;
