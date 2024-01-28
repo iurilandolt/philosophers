@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/27 13:11:48 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:14:32 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,24 @@ bool	lone_thread(t_philo *philo)
 	return (false);
 }
 
+void	update_priority(t_philo *philo)
+{
+	long	elapsed;
+	long	threshold;
+
+	if (philo->index % 2 == 0)
+		return ;
+	if (pthread_mutex_lock(&philo->mtx) != 0)
+		ft_error("pthread_mutex_unlock() failed.");
+	elapsed = get_time() - philo->last_meal;
+	if (pthread_mutex_unlock(&philo->mtx) != 0)
+		ft_error("pthread_mutex_lock() failed.");
+	threshold = philo->lspan * 0.30;
+	if (elapsed <= threshold)
+		ft_usleep(philo->lspan * 0.30);
+	else
+		return ;
+}
 
 static void print_philo_values(t_philo *philo)
 {
