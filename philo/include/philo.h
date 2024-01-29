@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 16:33:04 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:06:10 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_sim
 	t_fork			*forks;
 	int				seats;
 	int				goal;
+	int				served;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;

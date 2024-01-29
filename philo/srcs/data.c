@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 22:31:41 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 16:32:31 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:00:54 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	threads_create(t_sim *sim)
 			ft_error("pthread_create() failed.");
 		i++;
 	}
+	ft_usleep(sim->seats);
 	if (pthread_create(&moni, NULL, monitor, (void *)sim) != 0)
 		ft_error("pthread_create() failed.");
 	if (pthread_join(moni, NULL) != 0)
