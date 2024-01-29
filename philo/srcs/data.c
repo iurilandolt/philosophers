@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 22:31:41 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 11:22:27 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:32:31 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,43 +79,9 @@ t_fork	*alloc_forks(t_sim *sim)
 		}
 */
 
-void	*monitor(void *data)
-{
-	t_sim	*sim;
-	int		i;
-	int 	full;
-
-	sim = (t_sim *)data;
-	full = 0;
-	ft_usleep(sim->seats);
-	while (1)
-	{
-		i = 0;
-		while (i < sim->seats)
-		{
-			if (get_bool(&sim->mtx, &sim->ended))
-				return (NULL);
-			if (get_bool(&sim->mtx, &(sim->philosophers + i)->full))
-				full++;
-			if (full == sim->seats)
-				return (NULL);
-			if (is_dead(sim->philosophers + i))
-			{
-				if (pthread_mutex_lock(&sim->mtx) != 0)
-					ft_error("pthread_mutex_lock() failed.");
-				sim->ended = true;
-				if (pthread_mutex_unlock(&sim->mtx) != 0)
-					ft_error("pthread_mutex_unlock() failed.");
-				return (NULL);
-			}
-			i++;
-		}
-	}
-}
-
 void	threads_create(t_sim *sim)
 {
-	int		i;
+	int			i;
 	pthread_t	moni;
 
 	i = 0;
@@ -166,60 +132,3 @@ void	cleanup(t_sim *sim)
 	free(sim->philosophers);
 	free(sim->forks);
 }
-
-
-/*
-
-
-void	*monitor(void *data)
-{
-	t_sim	*sim;
-	int		i;
-
-	sim = (t_sim *)data;
-	while (1)
-	{
-
-		i = 0;
-		while (i < sim->seats)
-		{
-			if (is_dead(sim->philosophers + i))
-			{
-				if (pthread_mutex_lock(&sim->mtx) != 0)
-					ft_error("pthread_mutex_lock() failed.");
-				sim->ended = true;
-				if (pthread_mutex_unlock(&sim->mtx) != 0)
-					ft_error("pthread_mutex_unlock() failed.");
-				return (NULL);
-			}
-			i++;
-		}
-	}
-}
-
-void	threads_create(t_sim *sim)
-{
-	int		i;
-	pthread_t	moni;
-
-	i = 0;
-	while (i < sim->seats)
-	{
-		if (pthread_create(&(sim->philosophers + i)->th_id, NULL, philosopher,
-				(void *)(sim->philosophers + i)) != 0)
-			ft_error("pthread_create() failed.");
-		i++;
-	}
-	if (pthread_create(&moni, NULL, monitor, (void *)sim) != 0)
-		ft_error("pthread_create() failed.");
-	i = 0;
-	while (i < sim->seats)
-	{
-		if (pthread_join((sim->philosophers + i)->th_id, NULL) != 0)
-			ft_error("pthread_join() failed.");
-		i++;
-	}
-	if (pthread_join(moni, NULL) != 0)
-		ft_error("pthread_join() failed.");
-}
-*/

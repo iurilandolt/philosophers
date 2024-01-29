@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 10:59:07 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:34:17 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,17 @@ bool	lone_thread(t_philo *philo)
 		print_status(philo, "has picked up a fork");
 		ft_usleep(philo->lspan);
 		print_status(philo, M"has died."RST);
-
 		if (pthread_mutex_lock(&philo->sim->mtx) != 0)
 			ft_error("pthread_mutex_lock() failed.");
 		philo->sim->ended = true;
 		philo->dead = true;
 		if (pthread_mutex_unlock(&philo->sim->mtx) != 0)
 			ft_error("pthread_mutex_unlock() failed.");
-
 		return (true);
 	}
 	return (false);
 }
-
-
+/*
 static void print_philo_values(t_philo *philo)
 {
 	printf("philo: %d\nmeals: %d\n", philo->index, philo->meals);
@@ -136,4 +133,4 @@ void	print_sim_values(t_sim *sim)
 	printf("-> Philosophers with full stomachs: %d.\n", full);
 	printf("-> Meals Served: %d\n", meals);
 }
-
+*/

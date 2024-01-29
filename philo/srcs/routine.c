@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 01:37:47 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 14:18:28 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:30:47 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	eat(t_philo *philo)
 	if (get_bool(&philo->sim->mtx, &philo->sim->ended))
 		return ;
 	pickup_first_fork(philo);
-	if (get_bool(&philo->sim->mtx, &philo->sim->ended)) //  || is_dead(philo)
+	if (get_bool(&philo->sim->mtx, &philo->sim->ended))
 	{
 		putdown_first_fork(philo);
 		return ;
@@ -88,6 +88,7 @@ void	*philosopher(void *data)
 	}
 	return (NULL);
 }
+
 /*
 		//print_status(philo, Y"is thinking"RST);
 		//if (philo->sim->seats % 2 && philo->index % 2)

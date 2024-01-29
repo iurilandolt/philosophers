@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 13:34:41 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:29:43 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	exit_safe(t_sim *sim)
 	if (sim)
 		free(sim);
 	ft_error("Invalid arguments.\n"
-		G"Usage: qty.      | ms to die | ms to eat | ms to sleep | meal qty.\n"RST
-		Y"       200[max]  | 60[min]   | 60[min]   | 60[min]     | optional.\n"RST);
+		G"Usage: qty.      | ms to die |"
+		"ms to eat | ms to sleep | meal qty.\n"RST
+		Y"       200[max]  | 60[min]   |"
+		"60[min]   | 60[min]     | optional.\n"RST);
 }
 
 int	main(int argc, char **argv)
@@ -35,7 +37,6 @@ int	main(int argc, char **argv)
 			exit_safe(sim);
 		startup(sim);
 		threads_create(sim);
-		//print_sim_values(sim);
 		cleanup(sim);
 		free(sim);
 	}

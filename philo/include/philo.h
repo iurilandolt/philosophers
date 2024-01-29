@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/24 15:35:15 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:33:04 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	threads_create(t_sim *sim);
 t_philo	*alloc_philos(t_sim *sim);
 t_fork	*alloc_forks(t_sim *sim);
 void	*philosopher(void *data);
+void	*monitor(void *data);
 bool	is_dead(t_philo *philo);
 bool	is_full(t_philo *philo);
 bool	lone_thread(t_philo *philo);
@@ -88,7 +89,5 @@ void	putdown_first_fork(t_philo *philo);
 void	putdown_second_fork(t_philo *philo);
 void	ft_usleep(long usecs);
 long	get_time(void);
-
-void	print_sim_values(t_sim *sim);
 
 #endif

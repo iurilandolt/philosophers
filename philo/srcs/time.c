@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:12:55 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/26 12:44:13 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:32:36 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,36 @@ void	ft_usleep(long usecs)
 	return ;
 }
 
+void	*monitor(void *data)
+{
+	t_sim	*sim;
+	int		i;
+	int		full;
+
+	sim = (t_sim *)data;
+	full = 0;
+	ft_usleep(sim->seats);
+	while (1)
+	{
+		i = 0;
+		while (i < sim->seats)
+		{
+			if (get_bool(&sim->mtx, &sim->ended))
+				return (NULL);
+			if (get_bool(&sim->mtx, &(sim->philosophers + i)->full))
+				full++;
+			if (full == sim->seats)
+				return (NULL);
+			if (is_dead(sim->philosophers + i))
+			{
+				if (pthread_mutex_lock(&sim->mtx) != 0)
+					ft_error("pthread_mutex_lock() failed.");
+				sim->ended = true;
+				if (pthread_mutex_unlock(&sim->mtx) != 0)
+					ft_error("pthread_mutex_unlock() failed.");
+				return (NULL);
+			}
+			i++;
+		}
+	}
+}
