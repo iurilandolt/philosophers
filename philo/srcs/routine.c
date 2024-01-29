@@ -6,17 +6,11 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 01:37:47 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 16:30:47 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 23:11:00 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-void	ft_error(char *str)
-{
-	printf("%s%s%s\n", R, str, RST);
-	exit(EXIT_FAILURE);
-}
 
 void	eat(t_philo *philo)
 {

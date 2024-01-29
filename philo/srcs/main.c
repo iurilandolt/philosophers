@@ -6,12 +6,16 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:41:29 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 16:29:43 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 23:09:17 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <string.h>
+
+void	ft_error(char *str)
+{
+	printf("%s%s%s\n", R, str, RST);
+}
 
 void	exit_safe(t_sim *sim)
 {
@@ -32,9 +36,12 @@ int	main(int argc, char **argv)
 	{
 		sim = (t_sim *)malloc(sizeof(t_sim));
 		if (!sim)
-			ft_error("malloc() failed.");
+			return (1);
 		if (!parse(sim, argc, argv))
+		{
 			exit_safe(sim);
+			return (1);
+		}
 		startup(sim);
 		threads_create(sim);
 		cleanup(sim);
