@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 01:37:47 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/28 22:28:15 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:18:28 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,64 @@ void	rest(t_philo *philo)
 	ft_usleep(philo->sim->time_to_sleep);
 }
 
+void	think(t_philo *philo)
+{
+	int	think;
+
+	if (get_bool(&philo->sim->mtx, &philo->sim->ended))
+		return ;
+	print_status(philo, Y"is thinking"RST);
+	if (philo->sim->seats % 2 == 0)
+		return ;
+	think = philo->sim->time_to_eat * 2 - philo->sim->time_to_sleep;
+	if (think < 0)
+		think = 0;
+	ft_usleep(think * 0.40);
+}
+
 void	*philosopher(void *data)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-
-
 	pthread_mutex_lock(&philo->sim->mtx);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->sim->mtx);
 	if (lone_thread(philo))
 		return (NULL);
+	if (philo->index % 2)
+		ft_usleep(philo->sim->time_to_eat);
 	while (1)
 	{
-
 		if (is_full(philo))
 			break ;
 		if (get_bool(&philo->sim->mtx, &philo->sim->ended))
 			break ;
-
-		//if (is_dead(philo))
-		//	break ;
-		print_status(philo, Y"is thinking"RST);
-		if (philo->sim->seats % 2 && philo->index % 2)
-			ft_usleep(5);
-		if (get_bool(&philo->sim->mtx, &philo->sim->ended))
-			break ;
-		//if (is_dead(philo))
-			//break ;
 		eat(philo);
-		//if (get_bool(&philo->sim->mtx, &philo->sim->ended))
-		//	break ;
 		rest(philo);
+		think(philo);
 	}
 	return (NULL);
 }
+/*
+		//print_status(philo, Y"is thinking"RST);
+		//if (philo->sim->seats % 2 && philo->index % 2)
+		//	ft_usleep(5);
+
+		void	update_priority(t_philo *philo)
+		{
+			long	elapsed;
+			long	threshold;
+
+			if (pthread_mutex_lock(&philo->mtx) != 0)
+				ft_error("pthread_mutex_unlock() failed.");
+			elapsed = get_time() - philo->last_meal;
+			if (pthread_mutex_unlock(&philo->mtx) != 0)
+				ft_error("pthread_mutex_lock() failed.");
+			threshold = philo->lspan * 0.30;
+			if (elapsed <= threshold)
+				ft_usleep(philo->lspan * 0.30);
+			else
+				return ;
+		}
+*/

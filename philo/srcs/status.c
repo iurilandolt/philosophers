@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/28 22:23:28 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:59:07 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ bool	lone_thread(t_philo *philo)
 {
 	if (philo->sim->seats == 1)
 	{
-		print_status(philo, "is thinking");
 		print_status(philo, "has picked up a fork");
 		ft_usleep(philo->lspan);
 		print_status(philo, M"has died."RST);

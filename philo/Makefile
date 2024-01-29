@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/15 18:21:04 by rlandolt          #+#    #+#              #
-#    Updated: 2024/01/25 12:06:51 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/01/29 13:33:47 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC = $(SRC_PATH)/main.c \
 
 SANITIZER = -g -pthread
 
-CC = cc -pthread
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 OBJ = $(SRC:.c=.o)

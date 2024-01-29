@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 22:31:41 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/27 13:11:11 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:22:27 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	*monitor(void *data)
 		i = 0;
 		while (i < sim->seats)
 		{
-
 			if (get_bool(&sim->mtx, &sim->ended))
 				return (NULL);
 			if (get_bool(&sim->mtx, &(sim->philosophers + i)->full))
@@ -119,8 +118,6 @@ void	threads_create(t_sim *sim)
 	int		i;
 	pthread_t	moni;
 
-
-
 	i = 0;
 	while (i < sim->seats)
 	{
@@ -140,8 +137,6 @@ void	threads_create(t_sim *sim)
 			ft_error("pthread_join() failed.");
 		i++;
 	}
-
-
 }
 
 void	startup(t_sim *sim)
