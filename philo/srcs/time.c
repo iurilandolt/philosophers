@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:12:55 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 17:07:48 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 23:26:30 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ long	get_time(void)
 	return ((tv.tv_sec * (long)1000) + (tv.tv_usec / 1000));
 }
 
-void	ft_usleep(long usecs)
+void	ft_sleep(long usecs)
 {
 	long	start;
 

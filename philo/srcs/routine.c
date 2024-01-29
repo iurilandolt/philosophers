@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 01:37:47 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 23:11:00 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 23:26:06 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	eat(t_philo *philo)
 	if (pthread_mutex_unlock(&philo->sim->mtx) != 0)
 		ft_error("pthread_mutex_unlock() failed.");
 	print_status(philo, G"is eating"RST);
-	ft_usleep(philo->sim->time_to_eat);
+	ft_sleep(philo->sim->time_to_eat);
 	putdown_first_fork(philo);
 	putdown_second_fork(philo);
 }
@@ -40,7 +40,7 @@ void	rest(t_philo *philo)
 	if (get_bool(&philo->sim->mtx, &philo->sim->ended))
 		return ;
 	print_status(philo, B"is sleeping"RST);
-	ft_usleep(philo->sim->time_to_sleep);
+	ft_sleep(philo->sim->time_to_sleep);
 }
 
 void	think(t_philo *philo)
@@ -55,7 +55,7 @@ void	think(t_philo *philo)
 	think = philo->sim->time_to_eat * 2 - philo->sim->time_to_sleep;
 	if (think < 0)
 		think = 0;
-	ft_usleep(think * 0.40);
+	ft_sleep(think * 0.40);
 }
 
 void	*philosopher(void *data)
@@ -69,7 +69,7 @@ void	*philosopher(void *data)
 	if (lone_thread(philo))
 		return (NULL);
 	if (philo->index % 2)
-		ft_usleep(philo->sim->time_to_eat);
+		ft_sleep(philo->sim->time_to_eat);
 	while (1)
 	{
 		if (is_full(philo))
@@ -86,7 +86,7 @@ void	*philosopher(void *data)
 /*
 		//print_status(philo, Y"is thinking"RST);
 		//if (philo->sim->seats % 2 && philo->index % 2)
-		//	ft_usleep(5);
+		//	ft_sleep(5);
 
 		void	update_priority(t_philo *philo)
 		{
@@ -100,7 +100,7 @@ void	*philosopher(void *data)
 				ft_error("pthread_mutex_lock() failed.");
 			threshold = philo->lspan * 0.30;
 			if (elapsed <= threshold)
-				ft_usleep(philo->lspan * 0.30);
+				ft_sleep(philo->lspan * 0.30);
 			else
 				return ;
 		}

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:15:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 16:34:17 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 23:26:25 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	lone_thread(t_philo *philo)
 	if (philo->sim->seats == 1)
 	{
 		print_status(philo, "has picked up a fork");
-		ft_usleep(philo->lspan);
+		ft_sleep(philo->lspan);
 		print_status(philo, M"has died."RST);
 		if (pthread_mutex_lock(&philo->sim->mtx) != 0)
 			ft_error("pthread_mutex_lock() failed.");

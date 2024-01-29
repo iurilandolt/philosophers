@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:21:12 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/01/29 17:06:10 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/01/29 23:26:12 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	pickup_first_fork(t_philo *philo);
 void	pickup_second_fork(t_philo *philo);
 void	putdown_first_fork(t_philo *philo);
 void	putdown_second_fork(t_philo *philo);
-void	ft_usleep(long usecs);
+void	ft_sleep(long usecs);
 long	get_time(void);
 
 #endif
