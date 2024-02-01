@@ -75,10 +75,10 @@ N philosophers / 1 monitor
 
 philosopher thread routine
 
-    void	*philosopher(void *data)
-{
+	void	*philosopher(void *data)
+	{
 	t_philo	*philo;
-
+	
 	philo = (t_philo *)data;
 	pthread_mutex_lock(&philo->sim->mtx);
 	philo->last_meal = get_time();
@@ -94,7 +94,7 @@ philosopher thread routine
 		think(philo);
 	}
 	return (NULL);
-}
+	}
 
 monitor routine
 
