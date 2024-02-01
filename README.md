@@ -43,8 +43,53 @@ get sim "start" time
     		ft_error("pthread_mutex_init() failed.");
     }
 ```
+mutexes, init/lock/unlock logic.
+struct examples, pointers to uninitialized structs
+```c
+	typedef struct s_fork
+	{
+		int		index;
+		pthread_mutex_t	mtx;
+	}	t_fork;
+	
+	typedef struct s_sim	t_sim;
+	
+	typedef struct s_philo
+	{
+		pthread_t			th_id;
+		int				index;
+		int				meals;
+		int				limit;
+		int				lspan;
+		long				last_meal;
+		bool				full;
+		bool				dead;
+		t_fork				*left;
+		t_fork				*right;
+		t_sim				*sim;
+		pthread_mutex_t		mtx;
+	}	t_philo;
+	
+	typedef struct s_sim
+	{
+		t_philo			*philosophers;
+		t_fork			*forks;
+		int			seats;
+		int			goal;
+		int			served;
+		int			time_to_die;
+		int			time_to_eat;
+		int			time_to_sleep;
+		long			start;
+		bool			ended;
+		pthread_mutex_t	mtx;
+	}	t_sim;
+```
+
 init threads with respective routine 
 N philosophers / 1 monitor
+pthread_create arguments -> void *data -> ideal use of structs
+
 ```c
     void	threads_create(t_sim *sim)
     {
@@ -127,7 +172,8 @@ monitor routine
     	}
     }
 ```
-considerations:
+
+further considerations:
 
 sleep() time inacuracy // gettimeofday & timevalstructs
 ```c
