@@ -27,7 +27,7 @@ shared memory space, data-races, deadlocks and other related concepts.
 
 • A status message cannot be showned with a delay of more than 10ms.
 
-Structs Layout and Logic.
+### Structs Layout and Logic.
 
 The core of this Dining Philosophers implementation revolves around several key data structures designed to encapsulate the state and behavior of forks, philosophers, and the simulation environment itself.
 
@@ -72,7 +72,7 @@ The core of this Dining Philosophers implementation revolves around several key 
 	}	t_sim;
 ```
 
-Mutexes, pthread Creation, and Thread Behavior.
+### Mutexes, pthread Creation, and Thread Behavior.
 
 The implementation leverages POSIX threads (pthreads) and mutexes to handle concurrency and synchronization in the Dining Philosophers problem. Here’s an overview of how these components are utilized:
 
@@ -145,7 +145,7 @@ The main thread's behavior is crucial in managing the lifecycle of the simulatio
 	}
 ```
 
-Philosopher routine:
+### Philosopher routine:
 
 Life Cycle Management: The life cycle (eating, sleeping, thinking) is managed in a loop, reflecting the continuous nature of the philosophers' actions. The loop exits based on specific conditions (fullness or simulation end), illustrating how a philosopher's thread may conclude.
 
@@ -179,17 +179,17 @@ Life Cycle Management: The life cycle (eating, sleeping, thinking) is managed in
     	}
     }
 ```
-monitor routine:
+### Monitor routine:
 
 continuously checks each philosopher's status to identify if any have died from starvation or if all philosophers have successfully completed their meal goals.
 
-further considerations:
+### further considerations:
 
-Fork assignment:
+### Fork assignment:
 Philosophers pick up forks in a specific order based on their position: odd-numbered philosophers pick up their left fork first, while even-numbered pick up their right fork first. 
 This method ensures that not all philosophers attempt to pick up adjacent forks simultaneously, reducing deadlock risk and facilitating smoother execution of the simulation.
 
-Sleep Inaccuracy: 
+### Sleep() Inaccuracy: 
 
 Traditional sleep functions like usleep may introduce inaccuracy due to system scheduling and wake-up latency. The ft_sleep function mitigates this by periodically checking if the desired sleep duration has passed, improving the precision of sleep intervals in the context of the simulation's requirements.
 
@@ -214,7 +214,7 @@ Traditional sleep functions like usleep may introduce inaccuracy due to system s
     }
 ```
 
-Addressing Resource Starvation:
+### Addressing Resource Starvation:
 
 In a multithreaded simulation like the Dining Philosophers, resource starvation can occur when one or more threads (philosophers) are perpetually denied access to necessary resources (forks), leading to uneven progress among threads. 
 Even with mutexes for fork handling an even destribuition of resources is not guaranteed. In some cases you can try to "desynchronize" the philosophers actions or try to make use of the remaining time when time_to_eat + time_to_sleep < time_to die.
@@ -236,4 +236,5 @@ Even with mutexes for fork handling an even destribuition of resources is not gu
     }
 ```
 
-#comment end documentation with some kind of note
+This project is not a perfect solution, and even though it was thoroughly tested, it will most certainly be inconsistent with very tight timings.
+
