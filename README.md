@@ -1,4 +1,4 @@
-# philosophers
+# Philosophers
 
 This project is a possible solution for E.W. Dijkstra's dinnig philosophers problem.
 This project serves as an introduction to multithreaded programing, concurrency, 
@@ -27,7 +27,7 @@ shared memory space, data-races, deadlocks and other related concepts.
 
 • A status message cannot be showned with a delay of more than 10ms.
 
-## pre sim
+#comment on structs layout and logic
 
 ```c
 	typedef struct s_fork
@@ -70,25 +70,7 @@ shared memory space, data-races, deadlocks and other related concepts.
 	}	t_sim;
 ```
 
-alloc mem for all philos and forks
-init "table" mutex
-get sim "start" time
-
-```c
-    void	startup(t_sim *sim)
-    {
-    	sim->ended = false;
-    	sim->philosophers = alloc_philos(sim);
-    	sim->forks = alloc_forks(sim);
-    	sim->start = get_time();
-    	if (pthread_mutex_init(&sim->mtx, NULL) != 0)
-    		ft_error("pthread_mutex_init() failed.");
-    }
-```
-
-init threads with respective routine 
-N philosophers / 1 monitor
-pthread_create arguments -> void *data -> ideal use of structs
+#comment on mutexes, pthread create arguments, why pass a struct as argument with the void *, pthread join, how the main thread behaves in these circumstances refer to the functions below
 
 ```c
     void	threads_create(t_sim *sim)
@@ -118,7 +100,9 @@ pthread_create arguments -> void *data -> ideal use of structs
     	}
     }
 ```
-philosopher thread routine
+philosopher thread routine:
+#comment how philosopher checks and set's his last meal time, checks if he is full but not if he is dead, also doesnot have any information about any other philosopher, if not refered before what happens when the function passed to pthread create ends, how it returns to main thread with join etc.
+
 ```c
 	void	*philosopher(void *data)
 	{
@@ -141,7 +125,9 @@ philosopher thread routine
 	return (NULL);
 	}
 ```
-monitor routine
+monitor routine:
+#comment monitor thread iterates trhough all philosopher threads and checks if they died, it also sets simulation end status to true
+
 ```c
     void	*monitor(void *data)
     {
@@ -174,8 +160,8 @@ monitor routine
 ```
 
 further considerations:
+##coment elaborate on sleep() time inacuracy // gettimeofday & timevalstructs
 
-sleep() time inacuracy // gettimeofday & timevalstructs
 ```c
     long	get_time(void)
     {
@@ -196,7 +182,10 @@ sleep() time inacuracy // gettimeofday & timevalstructs
     	return ;
     }
 ```
+
 resource starvation / using remaining time when time_to_eat + time_to_sleep < time_to die
+#commment on resource starvation, why even with the mutex locks preventing the deadlock there are philosophers not getting any food etc
+
 ```c
     void	think(t_philo *philo)
     {
@@ -213,7 +202,10 @@ resource starvation / using remaining time when time_to_eat + time_to_sleep < ti
     	ft_sleep(think * 0.40);
     }
 ```
+
 data races & conditional variables
+#comment on how condiutional variables work why use a function like get bool to protect reads
+
 ```c
     bool	get_bool(pthread_mutex_t *mtx, bool *value)
     {
@@ -225,3 +217,4 @@ data races & conditional variables
     	return (ret);
     }
 ```
+#comment end documentation with some kind of note
