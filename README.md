@@ -80,7 +80,8 @@ The implementation leverages POSIX threads (pthreads) and mutexes to handle conc
 In the t_fork struct, a mutex (pthread_mutex_t mtx) ensures that only one philosopher can hold a fork at any given time.
 In the t_philo and t_sim structs, mutexes are used to protect the state of the philosopher and the simulation, respectively, allowing for safe updates and checks of shared variables in a multithreaded environment.
 
-`pthread_create` and Thread Behavior
+`pthread_create` and Thread Behavior.
+
 Each philosopher is represented by a thread. The pthread_create function is used to create these threads, passing each philosopher’s unique data structure
 The thread runs the philosopher function, taking a pointer to the philosopher's data (t_philo) as an argument.
 This approach allows each philosopher (thread) to operate independently while sharing the same simulation environment.
@@ -117,7 +118,8 @@ Inside the thread function (philosopher), this pointer is cast back to the appro
     	}
     }
 ```
-`pthread_join` and Main Thread Behavior
+`pthread_join` and Main Thread Behavior.
+
 The pthread_join function is used to wait for the completion of philosopher threads. It ensures that the main thread (which initiates the simulation) waits until all philosopher threads have finished their execution.
 
 The main thread's behavior is crucial in managing the lifecycle of the simulation. It initiates the philosopher threads, possibly a monitoring thread, and waits for their completion. It may also be responsible for initiating and ending the simulation, handling any cleanup or final state reporting.
