@@ -240,4 +240,5 @@ Even with mutexes for fork handling an even destribuition of resources is not gu
 ```
 
 This project is not a perfect solution, and even though it was thoroughly tested, it will most certainly be inconsistent with very tight timings.
+![output](https://github.com/iurilandolt/philosophers/blob/main/output.png?raw=true)
 
