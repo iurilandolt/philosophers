@@ -29,22 +29,6 @@ shared memory space, data-races, deadlocks and other related concepts.
 
 ## pre sim
 
-alloc mem for all philos and forks
-init "table" mutex
-get sim "start" time
-```c
-    void	startup(t_sim *sim)
-    {
-    	sim->ended = false;
-    	sim->philosophers = alloc_philos(sim);
-    	sim->forks = alloc_forks(sim);
-    	sim->start = get_time();
-    	if (pthread_mutex_init(&sim->mtx, NULL) != 0)
-    		ft_error("pthread_mutex_init() failed.");
-    }
-```
-mutexes, init/lock/unlock logic.
-struct examples, pointers to uninitialized structs
 ```c
 	typedef struct s_fork
 	{
@@ -84,6 +68,22 @@ struct examples, pointers to uninitialized structs
 		bool			ended;
 		pthread_mutex_t	mtx;
 	}	t_sim;
+```
+
+alloc mem for all philos and forks
+init "table" mutex
+get sim "start" time
+
+```c
+    void	startup(t_sim *sim)
+    {
+    	sim->ended = false;
+    	sim->philosophers = alloc_philos(sim);
+    	sim->forks = alloc_forks(sim);
+    	sim->start = get_time();
+    	if (pthread_mutex_init(&sim->mtx, NULL) != 0)
+    		ft_error("pthread_mutex_init() failed.");
+    }
 ```
 
 init threads with respective routine 
