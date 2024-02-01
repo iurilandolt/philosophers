@@ -27,26 +27,154 @@ shared memory space, data-races, deadlocks and other related concepts.
 
 • A status message cannot be showned with a delay of more than 10ms.
 
-    int	main(int argc, char **argv)
+## pre sim
+
+alloc mem for all philos and forks
+init "table" mutex
+get sim "start" time
+
+    void	startup(t_sim *sim)
+    {
+    	sim->ended = false;
+    	sim->philosophers = alloc_philos(sim);
+    	sim->forks = alloc_forks(sim);
+    	sim->start = get_time();
+    	if (pthread_mutex_init(&sim->mtx, NULL) != 0)
+    		ft_error("pthread_mutex_init() failed.");
+    }
+
+init threads with respective routine 
+N philosophers / 1 monitor
+
+    void	threads_create(t_sim *sim)
+    {
+    	int			i;
+    	pthread_t	moni;
+    
+    	i = 0;
+    	while (i < sim->seats)
+    	{
+    		if (pthread_create(&(sim->philosophers + i)->th_id, NULL, philosopher,
+    				(void *)(sim->philosophers + i)) != 0)
+    			ft_error("pthread_create() failed.");
+    		i++;
+    	}
+    	ft_sleep(sim->seats);
+    	if (pthread_create(&moni, NULL, monitor, (void *)sim) != 0)
+    		ft_error("pthread_create() failed.");
+    	if (pthread_join(moni, NULL) != 0)
+    		ft_error("pthread_join() failed.");
+    	i = 0;
+    	while (i < sim->seats)
+    	{
+    		if (pthread_join((sim->philosophers + i)->th_id, NULL) != 0)
+    			ft_error("pthread_join() failed.");
+    		i++;
+    	}
+    }
+
+philosopher thread routine
+
+    void	*philosopher(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	pthread_mutex_lock(&philo->sim->mtx);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->sim->mtx);
+	while (1)
+	{
+		if (is_full(philo))
+			break ;
+		if (get_bool(&philo->sim->mtx, &philo->sim->ended))
+			break ;
+		eat(philo);
+		rest(philo);
+		think(philo);
+	}
+	return (NULL);
+}
+
+monitor routine
+
+    void	*monitor(void *data)
     {
     	t_sim	*sim;
+    	int		i;
     
-    	if (argc > 4 && argc < 7)
+    	sim = (t_sim *)data;
+    	sim->served = 0;
+    	while (1)
     	{
-    		sim = (t_sim *)malloc(sizeof(t_sim));
-    		if (!sim)
-    			return (1);
-    		if (!parse(sim, argc, argv))
+    		i = -1;
+    		while (++i < sim->seats)
     		{
-    			exit_safe(sim);
-    			return (1);
+    			if (get_bool(&sim->mtx, &sim->ended))
+    				return (NULL);
+    			if (get_bool(&sim->mtx, &(sim->philosophers + i)->full))
+    				sim->served++;
+    			if (sim->served == sim->seats)
+    				return (NULL);
+    			if (is_dead(sim->philosophers + i))
+    			{
+    				pthread_mutex_lock(&sim->mtx);
+    				sim->ended = true;
+    				pthread_mutex_unlock(&sim->mtx);
+    				return (NULL);
+    			}
     		}
-    		startup(sim);
-    		threads_create(sim);
-    		cleanup(sim);
-    		free(sim);
     	}
-    	else
-    		exit_safe(NULL);
-    	return (0);
+    }
+
+considerations:
+
+sleep() time inacuracy // gettimeofday & timevalstructs
+
+    long	get_time(void)
+    {
+    	struct timeval	tv;
+    
+    	if (gettimeofday(&tv, NULL))
+    		ft_error("gettimeofday() failed.");
+    	return ((tv.tv_sec * (long)1000) + (tv.tv_usec / 1000));
+    }
+    
+    void	ft_sleep(long usecs)
+    {
+    	long	start;
+    
+    	start = get_time();
+    	while ((get_time() - start) < usecs)
+    		usleep(usecs / 10);
+    	return ;
+    }
+
+resource starvation / using remaining time when time_to_eat + time_to_sleep < time_to die
+
+    void	think(t_philo *philo)
+    {
+    	int	think;
+    
+    	if (get_bool(&philo->sim->mtx, &philo->sim->ended))
+    		return ;
+    	print_status(philo, Y"is thinking"RST);
+    	if (philo->sim->seats % 2 == 0)
+    		return ;
+    	think = philo->sim->time_to_eat * 2 - philo->sim->time_to_sleep;
+    	if (think < 0)
+    		think = 0;
+    	ft_sleep(think * 0.40);
+    }
+
+data races & conditional variables
+
+    bool	get_bool(pthread_mutex_t *mtx, bool *value)
+    {
+    	bool	ret;
+    
+    	pthread_mutex_lock(mtx);
+    	ret = *value;
+    	pthread_mutex_unlock(mtx);
+    	return (ret);
     }
