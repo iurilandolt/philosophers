@@ -4,7 +4,6 @@ This project is a possible solution for E.W. Dijkstra's dinnig philosophers prob
 This project serves as an introduction to multithreaded programing, concurrency, 
 shared memory space, data-races, deadlocks and other related concepts.
 
-• One or more philosophers sit at a round table.
 
 • The philosophers alternatively eat, think, or sleep.
 
@@ -21,3 +20,9 @@ shared memory space, data-races, deadlocks and other related concepts.
 • Philosophers don’t speak with each other.
 
 • Philosophers don’t know if another philosopher is about to die.
+
+• Global variables are forbidden
+
+• Each philosopher should be a thread.
+
+• A status message cannot be showned with a delay of more than 10ms.
