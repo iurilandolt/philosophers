@@ -4,7 +4,7 @@ This project is a possible solution for E.W. Dijkstra's dinnig philosophers prob
 This project serves as an introduction to multithreaded programing, concurrency, 
 shared memory space, data-races, deadlocks and other related concepts.
 
-![arguments]([URL_of_the_image](https://raw.githubusercontent.com/iurilandolt/philosophers/main/args.png?token=GHSAT0AAAAAACIDC5PLLHNMUP65OZQH2UK6ZN4CZ2Q))
+![arguments](https://github.com/iurilandolt/philosophers/blob/main/args.png?raw=true)
 
 • The philosophers alternatively eat, think, or sleep.
 
