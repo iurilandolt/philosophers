@@ -13,12 +13,6 @@
 #include "../include/philo.h"
 #include <errno.h>
 
-void	ft_error(char *str) // pass t_simu, free allocated memory if any existss
-{
-	printf("%s%s%s\n", R, str, RST);
-	exit(EXIT_FAILURE);
-}
-
 static void	handle_mutex_error(int status, t_mtxcode op)
 {
 	if (!status)
