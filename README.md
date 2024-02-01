@@ -26,3 +26,27 @@ shared memory space, data-races, deadlocks and other related concepts.
 • Each philosopher should be a thread.
 
 • A status message cannot be showned with a delay of more than 10ms.
+
+    int	main(int argc, char **argv)
+    {
+    	t_sim	*sim;
+    
+    	if (argc > 4 && argc < 7)
+    	{
+    		sim = (t_sim *)malloc(sizeof(t_sim));
+    		if (!sim)
+    			return (1);
+    		if (!parse(sim, argc, argv))
+    		{
+    			exit_safe(sim);
+    			return (1);
+    		}
+    		startup(sim);
+    		threads_create(sim);
+    		cleanup(sim);
+    		free(sim);
+    	}
+    	else
+    		exit_safe(NULL);
+    	return (0);
+    }
