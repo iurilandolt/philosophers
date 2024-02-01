@@ -32,7 +32,7 @@ shared memory space, data-races, deadlocks and other related concepts.
 alloc mem for all philos and forks
 init "table" mutex
 get sim "start" time
-
+```c
     void	startup(t_sim *sim)
     {
     	sim->ended = false;
@@ -42,10 +42,10 @@ get sim "start" time
     	if (pthread_mutex_init(&sim->mtx, NULL) != 0)
     		ft_error("pthread_mutex_init() failed.");
     }
-
+```
 init threads with respective routine 
 N philosophers / 1 monitor
-
+```c
     void	threads_create(t_sim *sim)
     {
     	int			i;
@@ -72,9 +72,9 @@ N philosophers / 1 monitor
     		i++;
     	}
     }
-
+```
 philosopher thread routine
-
+```c
 	void	*philosopher(void *data)
 	{
 	t_philo	*philo;
@@ -95,9 +95,9 @@ philosopher thread routine
 	}
 	return (NULL);
 	}
-
+```
 monitor routine
-
+```c
     void	*monitor(void *data)
     {
     	t_sim	*sim;
@@ -126,11 +126,11 @@ monitor routine
     		}
     	}
     }
-
+```
 considerations:
 
 sleep() time inacuracy // gettimeofday & timevalstructs
-
+```c
     long	get_time(void)
     {
     	struct timeval	tv;
@@ -149,9 +149,9 @@ sleep() time inacuracy // gettimeofday & timevalstructs
     		usleep(usecs / 10);
     	return ;
     }
-
+```
 resource starvation / using remaining time when time_to_eat + time_to_sleep < time_to die
-
+```c
     void	think(t_philo *philo)
     {
     	int	think;
@@ -166,9 +166,9 @@ resource starvation / using remaining time when time_to_eat + time_to_sleep < ti
     		think = 0;
     	ft_sleep(think * 0.40);
     }
-
+```
 data races & conditional variables
-
+```c
     bool	get_bool(pthread_mutex_t *mtx, bool *value)
     {
     	bool	ret;
@@ -178,3 +178,4 @@ data races & conditional variables
     	pthread_mutex_unlock(mtx);
     	return (ret);
     }
+```
